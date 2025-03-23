@@ -20,18 +20,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /*
     @author : Eton.lin
     @description TODO
-    @date 2025-03-13 下午 10:35
+    @date 2025-03-23 上午 12:04
 */
 @ExtendWith(MockitoExtension.class)
-public class TestHappyPathStub {
-
+public class TestAnswer {
     @Mock
     HttpServletRequest request;
     @Mock
@@ -40,37 +37,35 @@ public class TestHappyPathStub {
     AjaxController ajaxController;
     List<Country> countryList;
 
+
     @BeforeEach
     public void setUp() {
         ajaxController = new AjaxController(countryDao);
         countryList = new ArrayList<>();
-        countryList.add(new Country());
+        Country country = new Country();
+        country.setIso("US");
+        country.setIso("IN");
+        countryList.add(country);
     }
 
     @Test
-    public void shouldGetReponseWhenGivenAllHttpRequestParams() {
+    public  void shouldGetResultWhenRequestISOColumnDescAndP1From2Page(){
         when(request.getParameter(anyString()))
                 //request 第1次呼叫
                 .thenReturn("1")
                 //request 第2次呼叫
-                .thenReturn("10")
+                .thenReturn("2")
                 //request 第3次呼叫
-                .thenReturn(SortOrder.ASC.name())
+                .thenReturn(SortOrder.DESC.name())
                 //request 第4次呼叫
                 .thenReturn(SortColumn.ISO.name());
 
         when(countryDao.retrieve(isA(QueryCountryRequest.class)))
-                .thenReturn(countryList);
+                .thenAnswer(new SortAnswer());
 
         JsonDataWrapper<Country> response = ajaxController.retrieve(request);
-        assertEquals(1, response.getPage());
-        assertEquals(1, response.getTotal());
-        assertEquals(1, response.getRows().size());
-        verify(request,times(5)).getParameter(anyString());
-    }
-    @Test
-    public void shouldGetReponseWhenGivenAllHttpRequestParams2() {
-        request.getParameter("page");
-        verify(request).getParameter(anyString());
+        assertEquals(2, response.getRows().size());
+        assertEquals("US", response.getRows().get(0).getIso());
+        assertEquals("IN", response.getRows().get(1).getIso());
     }
 }
