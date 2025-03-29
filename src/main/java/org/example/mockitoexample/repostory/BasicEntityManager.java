@@ -2,6 +2,7 @@ package org.example.mockitoexample.repostory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
 /*
@@ -10,8 +11,9 @@ import org.springframework.stereotype.Repository;
     @date 2025-02-28 下午 03:33
 */
 @Repository
+@Setter
 public class BasicEntityManager {
 
     @PersistenceContext
-    protected EntityManager entityManager;
+    public EntityManager entityManager;
 }
