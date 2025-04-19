@@ -41,7 +41,6 @@ public class AjaxControllerTest {
         when(countryDao.retrieve(isA(QueryCountryRequest.class))).thenReturn(Collections.emptyList());
 
         List<Country> countryList = countryDao.retrieve(new QueryCountryRequest());
-        System.out.println(countryList.size());
         assertEquals(0,countryList.size());
     }
 }

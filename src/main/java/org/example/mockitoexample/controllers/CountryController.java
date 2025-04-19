@@ -24,7 +24,6 @@ public class CountryController {
     @Autowired
     private ICountryDao<Country> countryImpl;
 
-
     @GetMapping(value = "/country/{iso}")
     public String getIso(@PathVariable String iso) {
         QueryContext queryContext = new QueryContext();
