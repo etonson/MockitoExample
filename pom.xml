@@ -118,7 +118,18 @@
             <artifactId>mssql-jdbc</artifactId>
             <scope>runtime</scope>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-inline -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.14.9</version> <!-- 使用最新穩定版 -->
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
